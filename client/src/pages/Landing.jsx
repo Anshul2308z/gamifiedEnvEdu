@@ -5,7 +5,7 @@ export default function Landing(){
         <>
 
         {/* stuff on the landing page */}
-        <div> hello</div>  {/*check*/}
+        <div className="italic"> hello</div>  {/*check*/}
         </>
     )
 }
