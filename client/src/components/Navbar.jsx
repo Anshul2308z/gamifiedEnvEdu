@@ -9,9 +9,9 @@ export default function Navbar (){
             <h1>Welcome to #project-name# </h1>
             <nav>
                 <Link to="/">Home</Link> |{" "}
-                <Link to="/login">{loggedin ? "Logout":"Login"}</Link> |{" "}
                 <Link to="/dashboard">Dashboard</Link> |{" "}
-                <Link to="/leaderboard">Leaderboard</Link>                
+                <Link to="/leaderboard">Leaderboard</Link> |{" "}               
+                <Link to="/login">{loggedin ? "Logout":"Login"}</Link> 
             </nav>
         </div>
     )

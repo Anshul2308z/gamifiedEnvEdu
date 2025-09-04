@@ -2,7 +2,7 @@ import { useState } from "react";
 import { supabase } from "../supabaseClient";
 import { Link } from "react-router-dom";
 
-export default function Login() {
+export default function Signup() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -11,29 +11,28 @@ export default function Login() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleLogin = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signUp({
       email: form.email,
       password: form.password,
     });
 
-    console.log("Login response:", data, error);
+    console.log("Signup response:", data, error);
 
     if (error) {
       setMessage("❌ " + error.message);
     } else {
-      setMessage("✅ Login successful!");
-      window.location.href = "/dashboard";
+      setMessage("✅ Account created! Check your email to confirm.");
     }
 
     setLoading(false);
   };
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleSignup = async () => {
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: { redirectTo: window.location.origin + "/dashboard" },
@@ -42,9 +41,9 @@ export default function Login() {
 
   return (
     <div className="max-w-sm mx-auto mt-10 p-6 border rounded-lg shadow">
-      <h2 className="text-2xl font-bold mb-4">Login</h2>
+      <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
 
-      <form onSubmit={handleLogin} className="space-y-4">
+      <form onSubmit={handleSignup} className="space-y-4">
         <input
           type="email"
           name="email"
@@ -57,7 +56,7 @@ export default function Login() {
         <input
           type="password"
           name="password"
-          placeholder="Password"
+          placeholder="Password (min 6 chars)"
           value={form.password}
           onChange={handleChange}
           className="w-full px-3 py-2 border rounded"
@@ -68,21 +67,21 @@ export default function Login() {
           className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
           disabled={loading}
         >
-          {loading ? "Logging in..." : "Login"}
+          {loading ? "Signing up..." : "Sign Up"}
         </button>
       </form>
 
       <button
-        onClick={handleGoogleLogin}
+        onClick={handleGoogleSignup}
         className="mt-4 w-full bg-red-500 text-white py-2 rounded hover:bg-red-600"
       >
-        Login with Google
+        Sign Up with Google
       </button>
 
       <p className="mt-4 text-sm text-center">
-        Don’t have an account?{" "}
-        <Link to="/signup" className="text-blue-600 hover:underline">
-          Sign up here
+        Already have an account?{" "}
+        <Link to="/login" className="text-blue-600 hover:underline">
+          Login here
         </Link>
       </p>
 
